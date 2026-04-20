@@ -1,0 +1,553 @@
+/* --- 1. PROFESSIONAL VARIABLES --- */
+:root {
+  /* Typography */
+  --font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Base Colors (Slate/Zinc) */
+  --bg-base: #020617;
+  --bg-card: rgba(15, 23, 42, 0.6);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-active: rgba(255, 255, 255, 0.15);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+
+  /* Accents (Muted Professional) */
+  --accent-primary: #38bdf8; /* Sky Blue */
+  --accent-hot: #fbbf24; /* Amber */
+  --accent-cold: #cbd5e1; /* White/Ice */
+  --accent-rain: #94a3b8; /* Slate */
+
+  /* Spacing & Radius */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+
+  /* Shadows (Soft & Diffuse) */
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.15);
+
+  /* Theme Defaults */
+  --current-accent: var(--accent-primary);
+  --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+}
+
+/* THEMES */
+body.theme-hot {
+  --current-accent: var(--accent-hot);
+  --bg-gradient: radial-gradient(circle at 50% 0%, #451a03 0%, #020617 100%);
+}
+body.theme-cold {
+  --current-accent: var(--accent-cold);
+  --bg-gradient: radial-gradient(circle at 50% 0%, #172554 0%, #020617 100%);
+}
+body.theme-rain {
+  --current-accent: var(--accent-rain);
+  --bg-gradient: radial-gradient(circle at 50% 0%, #0f172a 0%, #020617 100%);
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Noise Texture Overlay for Grain */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --- 3. LAYOUT COMPONENTS --- */
+
+/* Landing Page */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.brand-logo {
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: -3px;
+  background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.brand-tagline {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--current-accent);
+  font-weight: 600;
+  margin-bottom: 60px;
+}
+
+.search-giant {
+  width: 100%;
+  max-width: 600px;
+  transform: scale(1.1);
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.header-title h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.header-title span {
+  font-size: 0.75rem;
+  color: var(--current-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+}
+.header-search {
+  width: 350px;
+}
+
+/* Bento Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr; /* Asymmetric Layout */
+  gap: 30px;
+}
+
+.bento-column-left,
+.bento-column-right {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* --- 4. GLASS COMPONENTS --- */
+
+/* Base Glass Card Class */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--border-active);
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 6px 6px 6px 20px;
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+  background: rgba(2, 6, 23, 0.8);
+  border-color: var(--current-accent);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-btn {
+  background: var(--current-accent);
+  color: #020617;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.search-btn:hover {
+  transform: scale(1.05);
+}
+
+/* --- 5. WIDGET SPECIFICS --- */
+
+/* Weather Card */
+.weather-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 400px;
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.city-name {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.weather-desc {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.weather-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.temp-container {
+  display: flex;
+  align-items: flex-start;
+}
+.temperature {
+  font-size: 7rem;
+  font-weight: 700;
+  letter-spacing: -4px;
+  line-height: 0.9;
+  color: var(--text-primary);
+  font-feature-settings: "tnum"; /* Monospace numbers */
+}
+.unit-badge {
+  font-size: 2.5rem;
+  color: var(--text-tertiary);
+  font-weight: 300;
+  margin-top: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.unit-badge:hover {
+  color: var(--current-accent);
+}
+
+.weather-icon-wrapper {
+  opacity: 0.8;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: auto;
+}
+
+.detail-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 15px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detail-icon {
+  color: var(--current-accent);
+}
+.detail-text span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  display: block;
+}
+.detail-text strong {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Forecast List */
+.forecast-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.forecast-item {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  padding: 15px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+
+.forecast-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.forecast-day {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.forecast-temp {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Tips & AQI */
+.section-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tip-item {
+  display: flex;
+  gap: 15px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--current-accent);
+  border-radius: 4px 12px 12px 4px;
+}
+.tip-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.aqi-container {
+  text-align: center;
+  padding: 25px;
+}
+.aqi-value {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--current-accent);
+  font-feature-settings: "tnum";
+}
+.aqi-status {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.quote-card {
+  margin-top: auto;
+  text-align: center;
+  font-style: italic;
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* --- 6. RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .brand-logo {
+    font-size: 3.5rem;
+  }
+  .temperature {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-container {
+    padding: 20px;
+  }
+  .dash-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .header-search {
+    width: 100%;
+  }
+  .search-giant {
+    transform: scale(1);
+  }
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  .forecast-list {
+    overflow-x: auto;
+    display: flex;
+    padding-bottom: 10px;
+  }
+  .forecast-item {
+    min-width: 80px;
+  }
+}
+
+/* --- 7. UTILITY & ANIMATIONS --- */
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 15px;
+  border-radius: var(--radius-sm);
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  padding: 4rem;
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.05);
+  border-left-color: var(--current-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-fullscreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.9);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+/* Animations from previous steps */
+.weather-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.rain-drop {
+  position: absolute;
+  width: 1px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  animation: fall linear infinite;
+}
+.snow-flake {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  animation: fall linear infinite;
+  filter: blur(1px);
+}
+.sun-rays {
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(
+    circle,
+    var(--current-accent) 0%,
+    transparent 60%
+  );
+  opacity: 0.15;
+}
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  filter: blur(30px);
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}

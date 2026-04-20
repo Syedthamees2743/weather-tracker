@@ -1,0 +1,370 @@
+/*
+  CONTAINER FOR ALL ANIMATIONS
+  This layer sits behind the content (z-index 0)
+*/
+.weather-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  transition: background 1s ease;
+}
+
+/* =========================================
+   1. CLEAR / SUNNY ANIMATIONS
+   ========================================= */
+.weather-bg-container.clear {
+  background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+}
+
+.weather-bg-container.clear.dark {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.weather-bg-container.clear.light {
+  background: linear-gradient(180deg, #38bdf8 0%, #e0f2fe 100%);
+}
+
+.sun-glow {
+  position: absolute;
+  top: 15%;
+  right: 15%;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: sunFloat 6s ease-in-out infinite;
+}
+
+.sun-core {
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle, #FFD700 0%, #FFA500 70%, #FF6347 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 40px rgba(255, 165, 0, 0.4),
+    0 0 60px rgba(255, 99, 71, 0.3);
+  animation: sunPulse 4s ease-in-out infinite alternate;
+}
+
+.sun-rays {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.3) 0%,
+    rgba(255, 165, 0, 0.2) 40%,
+    transparent 70%
+  );
+  animation: sunRaysRotate 20s linear infinite;
+}
+
+@keyframes sunFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-10px) scale(1.05); }
+}
+
+@keyframes sunPulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 40px rgba(255, 165, 0, 0.4),
+      0 0 60px rgba(255, 99, 71, 0.3);
+  }
+  100% {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 0 60px rgba(255, 165, 0, 0.6),
+      0 0 90px rgba(255, 99, 71, 0.5);
+  }
+}
+
+@keyframes sunRaysRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* =========================================
+   2. RAIN / DRIZZLE ANIMATIONS
+   ========================================= */
+.weather-bg-container.rain {
+  background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
+}
+
+.weather-bg-container.rain.light {
+  background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 100%);
+}
+
+/* =========================================
+   3. CLOUDS ANIMATIONS
+   ========================================= */
+.weather-bg-container.clouds {
+  background: linear-gradient(180deg, #f7f9fc 0%, #e2e8f0 100%);
+}
+
+.weather-bg-container.clouds.dark {
+  background: linear-gradient(180deg, #2d3748 0%, #4a5568 100%);
+}
+
+.cloud-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.cloud-layer {
+  position: absolute;
+  width: 250px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 40px;
+  filter: blur(25px);
+  animation: cloudDrift linear infinite;
+}
+
+.weather-bg-container.clouds.dark .cloud-layer {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(-300px) scale(1);
+  }
+  50% {
+    transform: translateX(calc(50vw - 150px)) scale(1.1);
+  }
+  100% {
+    transform: translateX(calc(100vw + 300px)) scale(1);
+  }
+}
+
+/* =========================================
+   4. SNOW ANIMATIONS
+   ========================================= */
+.weather-bg-container.snow {
+  background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+}
+
+.weather-bg-container.snow.dark {
+  background: linear-gradient(180deg, #4a5568 0%, #718096 100%);
+}
+
+/* =========================================
+   5. THUNDERSTORM ANIMATIONS
+   ========================================= */
+.weather-bg-container.thunder {
+  background: linear-gradient(180deg, #2d3748 0%, #1a202c 50%, #0f1419 100%);
+}
+
+.lightning-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+  animation: lightningStrike 8s infinite;
+}
+
+@keyframes lightningStrike {
+  0%, 85%, 100% { opacity: 0; }
+  86% { opacity: 0.3; background: rgba(255, 255, 255, 0.3); }
+  87% { opacity: 0.6; background: rgba(255, 255, 255, 0.6); }
+  88% { opacity: 0.2; background: rgba(255, 255, 255, 0.2); }
+  89% { opacity: 0.4; background: rgba(255, 255, 255, 0.4); }
+  90% { opacity: 0; }
+}
+
+/* =========================================
+   6. MIST / FOG ANIMATIONS
+   ========================================= */
+.weather-bg-container.mist {
+  background: linear-gradient(180deg, #cbd5e1 0%, #e2e8f0 100%);
+}
+
+.weather-bg-container.mist.dark {
+  background: linear-gradient(180deg, #4a5568 0%, #718096 100%);
+}
+
+.fog-layer {
+  position: absolute;
+  width: 150%;
+  height: 40%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 80%,
+    transparent 100%
+  );
+  animation: fogDrift linear infinite;
+}
+
+.weather-bg-container.mist.dark .fog-layer {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent 100%
+  );
+}
+
+.fog-1 {
+  top: 10%;
+  animation-duration: 20s;
+  animation-delay: 0s;
+}
+
+.fog-2 {
+  top: 30%;
+  animation-duration: 30s;
+  animation-delay: 5s;
+}
+
+.fog-3 {
+  top: 50%;
+  animation-duration: 25s;
+  animation-delay: 10s;
+}
+
+@keyframes fogDrift {
+  0% {
+    transform: translateX(-50%);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 0.3;
+  }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 768px) {
+  .sun-glow {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    right: 20%;
+  }
+
+  .sun-core {
+    width: 50px;
+    height: 50px;
+  }
+
+  .sun-rays {
+    width: 120px;
+    height: 120px;
+  }
+
+  .cloud-layer {
+    width: 180px;
+    height: 60px;
+  }
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(-300px) scale(1);
+  }
+  50% {
+    transform: translateX(calc(50vw - 150px)) scale(1.1);
+  }
+  100% {
+    transform: translateX(calc(100vw + 300px)) scale(1);
+  }
+}
+
+.weather-bg-container.light .cloud-layer {
+  background: rgba(255, 255, 255, 0.3); /* Brighter clouds for light mode */
+}
+
+@keyframes cloudDrift {
+  from { transform: translateX(-400px); }
+  to { transform: translateX(120vw); }
+}
+
+/* =========================================
+   4. SNOW ANIMATIONS
+   ========================================= */
+.weather-bg-container.snow {
+  background: linear-gradient(to bottom, #475569, #94a3b8);
+}
+
+.snow-flake {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  top: -10px;
+  filter: blur(1px);
+  animation: snowFall linear infinite;
+}
+
+@keyframes snowFall {
+  to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* =========================================
+   5. THUNDERSTORM ANIMATIONS
+   ========================================= */
+.weather-bg-container.thunder {
+  background: linear-gradient(to bottom, #020617, #0f172a);
+}
+
+.lightning-flash {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: white;
+  opacity: 0;
+  animation: thunderFlash 5s infinite;
+}
+
+@keyframes thunderFlash {
+  0%, 90%, 100% { opacity: 0; }
+  92% { opacity: 0.4; }
+  94% { opacity: 0; }
+  96% { opacity: 0.6; }
+}
+
+/* =========================================
+   6. MIST / FOG ANIMATIONS
+   ========================================= */
+.weather-bg-container.mist {
+  background: linear-gradient(to bottom, #64748b, #94a3b8);
+}
+
+.fog-layer {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+  animation: fogDrift linear infinite;
+}
+
+.fog-1 { animation-duration: 15s; top: 20%; }
+.fog-2 { animation-duration: 25s; top: 50%; animation-direction: reverse; }
+
+@keyframes fogDrift {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
