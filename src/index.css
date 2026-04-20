@@ -1,0 +1,94 @@
+/* --- 1. CONTROL BAR (BELOW SEARCH) --- */
+.control-bar {
+  display: flex;
+  justify-content: flex-end; /* Align button to right to match search bar */
+  margin-bottom: 20px;
+  margin-top: -10px; /* Pull closer to search bar */
+  padding-right: 0;
+}
+
+.control-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.control-toggle:hover {
+  background: var(--current-accent);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* --- 2. LANDING TOGGLE --- */
+.landing-toggle {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.landing-toggle:hover {
+  background: var(--current-accent);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* --- 3. RESPONSIVE ALIGNMENT --- */
+
+/* The Search Bar (.header-search) is on the right side of the header.
+   The Control Bar should visually align with it on Desktop. */
+
+/* Tablet / Desktop */
+@media (min-width: 768px) {
+  .control-bar {
+    justify-content: flex-end;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .dash-header {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 15px;
+
+  }
+  
+  .header-search {
+    width: 100%;
+  }
+  
+  .control-bar {
+    justify-content: flex-end; /* Left aligned to match start of search */
+    margin-top: 10px;
+  }
+  
+  .landing-toggle {
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
